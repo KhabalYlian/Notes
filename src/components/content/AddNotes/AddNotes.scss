@@ -1,0 +1,180 @@
+@import "../../../scss/variables";
+
+.add-notes {
+	max-width: 1220px;
+	margin: 0 auto;
+
+	&__top {
+		position: relative;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		padding-top: 50px;
+	}
+
+	&__bottom {
+		display: flex;
+		flex-direction: column;
+
+		max-width: 400px;
+		margin: 30px auto;
+
+		font-size: 14px;
+	}
+
+	&__btn {
+		z-index: 10;
+
+		width: 80px;
+		height: 80px;
+
+		cursor: pointer;
+		transition: transform 0.2s ease-out;
+
+		border: none;
+		border-radius: 50%;
+		background-color: $main;
+		box-shadow: 0 1px 10px rgba(2 37 201/ 20%);
+	}
+
+	&__btn:hover {
+		transform: scale(1.1);
+	}
+
+	&__btn:active {
+		transform: scale(1);
+	}
+
+	&__btn::before {
+		content: "";
+
+		color: #F7F7F7;
+
+		font-size: 12px;
+		font-weight: 400;
+	}
+
+	&__wave-wrap {
+		position: absolute;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__wave {
+		position: absolute;
+
+		width: 200px;
+		height: 200px;
+
+		animation: spread;
+		animation-duration: 1s;
+		animation-timing-function: cubic-bezier(0, 0.2, 0.8, 1);
+		animation-iteration-count: infinite;
+
+		border: 10px solid #F7F7F7;
+		border-radius: 50%;
+		box-shadow:
+			inset 6px 6px 15px
+			rgba(2 37 201/ 100%),
+			6px 6px 15px
+			rgba(2 37 201/ 100%),
+			inset calc(6px * -1) calc(6px * -1)
+			15px rgba(2 37 201/ 20%),
+			calc(6px * -1) calc(6px * -1)
+			15px rgba(2 37 201/ 20%);
+		filter: blur(3px);
+	}
+
+	&__wave:nth-child(2) {
+		animation-delay: -1s;
+	}
+
+	&__wave:nth-child(3) {
+		animation-delay: -2s;
+	}
+
+	
+	&__prev svg {
+		transform: rotate(180deg);
+	}
+	
+	&__next,
+	&__prev {
+		position: absolute;
+		z-index: 10;
+		top: 0;
+		left: 0;
+
+		width: 30px;
+		height: 30px;
+		
+		padding: 2px;
+		
+		cursor: pointer;
+		transition: all 0.3s ease-in;
+		transform: translate(0, -50%);
+		
+		opacity: 0.4;
+		border: none;
+		outline: none;
+		background-color: inherit;
+	}
+
+	&__next {
+		left: 80%;
+		top: 5%;
+	}
+
+	&__prev {
+		left: 70%;
+		top: 5%;
+	}
+
+	&__next:hover,
+	&__prev:hover {
+		opacity: 1;
+	}
+
+	&__bottom svg {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+.carousel {
+	padding-top: 15px;
+}
+
+@keyframes spread {
+	0% {
+		width: 0;
+		height: 0;
+
+		opacity: 1;
+	}
+
+	100% {
+		width: 200px;
+		height: 200px;
+
+		opacity: 0;
+	}
+}
+
+@media screen and (max-width: 769px) {
+	.add-notes {
+		&__btn {
+			width: 60px;
+			height: 60px;
+		}
+
+		&__top {
+			margin-top: 50px;
+			padding: 0;
+		}
+	}
+}

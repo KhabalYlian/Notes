@@ -1,0 +1,33 @@
+@import url("../scss/_reset.scss");
+@import url("../components/content/AddNotes/AddNotes.scss");
+@import url("../components/content/RenderNotes/RenderNotes.scss");
+@import url("../components/content/EditNotice/EditNotice.scss");
+@import url("../components/content/SearchNotes/SearchNotes.scss");
+@import url("../components/header/AppHeader/AppHeader.scss");
+@import url("../components/registration/Authentication/Authentication.scss");
+@import url("../components/header/Profile/Profile.scss");
+@import url("../components/content/CardNotes/CardNotes.scss");
+@import url("../components/content/ChooseColor/ChooseColor.scss");
+@import url("../components/content/OptionBar/OptionBar.scss");
+@import url("../components/content/AddSingleNotes/AddSingleNotes.scss");
+@import url("../components/content/AddList/AddList.scss");
+@import url("../components/content/ListItem/ListItem.scss");
+@import url("../components/content/CardList/CardList.scss");
+@import "./variables";
+
+body,
+html {
+	position: relative;
+
+	width: 100%;
+	height: 100%;
+
+	background-color: $main;
+
+	font-family: Montserrat, sans-serif;
+	font-size: 16px;
+}
+
+.app {
+	position: relative;
+}

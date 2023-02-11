@@ -1,0 +1,43 @@
+@import "../../../scss/variables";
+
+.add-list {
+	display: flex;
+	flex-direction: column;
+
+	max-width: 350px;
+	margin: 0 30px;
+
+	&__text {
+		text-align: left;
+	}
+
+	&__title {
+		height: 30px;
+
+		border-radius: 10px 10px 0 0;
+
+		font-weight: 600;
+	}
+
+	&__wrapper {
+		background-color: $form;
+	}
+
+	&__add {
+		width: 100%;
+		height: 20px;
+	}
+
+	&__input-list {
+		width: 100%;
+		min-height: 25px;
+		padding: 5px;
+
+		white-space: pre-line;
+
+		border: 1px dashed black;
+		outline: none;
+
+		font-size: 16px;
+	}
+}

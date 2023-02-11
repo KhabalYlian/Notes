@@ -1,0 +1,45 @@
+@import "../../../scss/variables";
+
+.list-item {
+	&__edit {
+		padding: 5px;
+
+		outline: none;
+
+		font-size: 16px;
+
+		word-break: break-word;
+	}
+
+	&__delete {
+		cursor: pointer;
+		transition: all 0.2s ease;
+
+		background-color: $form;
+
+		padding: 0 5px;
+
+		font-size: 16px;
+		font-weight: 700;
+		line-height: 18px;
+	}
+
+	&__delete:hover {
+		background-color: gray;
+	}
+
+	&__box {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__cheackbox {
+		appearance: auto;
+		cursor: pointer;
+	}
+	
+	&__textDecoration {
+		text-decoration: line-through;
+	}
+}

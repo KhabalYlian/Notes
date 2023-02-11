@@ -1,0 +1,67 @@
+@import "../../../scss/variables";
+
+.add-single-notes {
+	display: flex;
+	flex-direction: column;
+
+	max-width: 350px;
+	margin: 30px;
+
+	&__text {
+		margin-bottom: 3px;
+
+		text-align: left;
+
+		color: $input-text;
+	}
+
+	&__title {
+		min-height: 30px;
+		padding: 5px;
+
+		white-space: pre-wrap;
+
+		border-radius: 10px 10px 0 0;
+		background-color: $form;
+
+		font-size: 16px;
+
+		font-weight: 600;
+	}
+
+	&_placeholder:empty::before {
+		content: attr(data-placeholder);
+
+		opacity: 0.5;
+	}
+
+	&__text-area {
+		min-height: 60px;
+		padding: 5px;
+
+		white-space: pre-line;
+
+		color: $input-text;
+		background-color: $form;
+
+		font-size: 16px;
+
+		font-weight: 400;
+	}
+
+	&_border {
+		padding-left: 8px;
+
+		border: none;
+		border-bottom: 2px solid $input-border-message;
+		outline: none;
+	}
+
+	&_border:focus {
+		border-bottom: 2px solid $focus-input;
+	}
+
+	&__error {
+		border-bottom: 2px solid $input-error;
+	}
+}

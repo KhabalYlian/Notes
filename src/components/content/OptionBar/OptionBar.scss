@@ -1,0 +1,37 @@
+@import "../../../scss/variables";
+
+.option {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+
+	height: 25px;
+	margin: auto 0 0;
+	padding: 3px 6px 2px;
+
+	border-top: 1px solid black;
+	gap: 10px;
+
+	&__edit,
+	&__remove,
+	&__choose-color {
+		padding: 0;
+
+		cursor: pointer;
+
+		border: none;
+		outline: none;
+		background-color: transparent;
+	}
+
+	&__edit:focus-visible,
+	&__remove:focus-visible,
+	&__choose-color:focus-visible {
+		border: 1px solid $edit-btn-background;
+	}
+
+	&__choose-color svg {
+		pointer-events: none;
+	}
+}

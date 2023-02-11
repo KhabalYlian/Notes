@@ -1,0 +1,54 @@
+.profile {
+	&__container {
+		display: flex;
+		align-items: center;
+	}
+
+	&__name {
+		padding: 10px;
+
+		cursor: pointer;
+	}
+
+	&__name:hover {
+		color: white;
+	}
+
+	&__menu {
+		position: absolute;
+		top: 50px;
+		left: calc(100% - 105px);
+
+		width: 100px;
+		height: 50px;
+
+		opacity: 0;
+		border-radius: 0 0 10px 10px;
+		background-color: rgb(108 154 192);
+	}
+
+	&__list {
+		padding: 5px;
+
+		cursor: pointer;
+		text-align: center;
+	}
+
+	&__list:hover {
+		color: white;
+	}
+}
+
+@keyframes show-menu {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 0.5;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

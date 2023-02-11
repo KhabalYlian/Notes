@@ -1,0 +1,50 @@
+@import "../../../scss/variables";
+
+.search-notes {
+	position: absolute;
+	z-index: 20;
+	top: 0;
+	left: 0;
+
+	margin-top: 50px;
+
+	&__input {
+		width: 250px;
+		height: 42px;
+		margin: 50px 0 0 25px;
+
+		color: $input-text;
+		border: 2px solid $header;
+		border-radius: 5px;
+		outline: none;
+		background: $background-input;
+	}
+}
+
+@media screen and (max-width: 769px) {
+	.search-notes {
+		top: 25px;
+		left: 50%;
+
+		margin: 0;
+
+		transform: translate(-50%, -50%);
+
+		&__input {
+			margin: 0;
+		}
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.search-notes {
+		left: 40%;
+
+		&__input {
+			width: 200px;
+			height: 35px;
+
+			font-size: 16px;
+		}
+	}
+}
