@@ -1,9 +1,8 @@
 FROM node:14-alpine
 WORKDIR /opt/app
 ADD package.json package.json
-RUN npm install
+RUN npm install && rm -rf /var/lib/apt/lists/*
 ADD . .
 ENV NODE_ENV production
 RUN npm run build
-CMD ["npm", "start"]
-EXPOSE 3000
+EXPOSE $PORT | 3000

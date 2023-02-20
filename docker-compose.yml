@@ -1,7 +1,7 @@
 version: '3'
 services:
     app:
-        image: notes
+        image: ghcr.io/khabalylian/notes/react-notes:develope
         container_name: notes
         restart: always
         ports:
