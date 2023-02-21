@@ -25,20 +25,21 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/readme_logo.png" alt="Logo" width="80" height="80">
+    <img src="/src/image/readme_logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Notes</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Is a site for convenient storage and management of notes
     <br />
     <br />
-    <a href="https://notes-roan-nine.vercel.app">View Demo</a>
+    <a href="https://notes-roan-nine.vercel.app">Visit Site</a>
   </p>
 </div>
 
 
+![product-screenshot]
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -75,6 +76,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 * React, React dom
 * Redux, Redux Toolkit
 * FireBase
+* Docker
 
 Library :
 * framer-motion
@@ -144,7 +146,7 @@ Project Link: [https://github.com/khabalylian/notes](https://github.com/khabalyl
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: src/image/readme_Sreenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
