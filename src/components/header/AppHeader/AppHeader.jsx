@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkAuth } from '../../../slice/userSlice';
+import { checkAuth, addNotesToDb } from '../../../slice/userSlice';
 import cn from 'classnames';
 import { auth } from '../../../auth/firebase.config';
 
@@ -37,8 +37,12 @@ export const AppHeader = () => {
             >
                 <p
                     onClick={() => {
-                        localStorage.removeItem('notes');
-                        window.location.reload();
+						if(isAuth){
+							dispatch(addNotesToDb([]));
+						}else {
+							localStorage.removeItem('notes');
+						}
+						window.location.reload();
                     }}
                     className='app-header__clear'
                 >
