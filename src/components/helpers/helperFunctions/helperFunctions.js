@@ -1,8 +1,15 @@
 
 export const HelperFunctions = () => {
 
-    function onDeleteItem(id, array) {
+
+    function onDeleteItem(id, array, isAuth) {
         const deleteItem = array.filter((note) => note.id !== id);
+
+		if(!isAuth) {
+			localStorage.removeItem('notes');
+			localStorage.setItem('notes', JSON.stringify(deleteItem));
+		}
+
         return deleteItem;
     };
 

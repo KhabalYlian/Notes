@@ -23,6 +23,12 @@ export const AddList = memo(({ list, setList, showError, title }) => {
         });
     }
 
+	function addList(e) {
+		e.preventDefault();
+        addItemToList();
+        inputList.current = '';
+	}
+
     return (
         <div className='add-list'>
             <p className='add-list__text'>Добавити список</p>
@@ -50,16 +56,10 @@ export const AddList = memo(({ list, setList, showError, title }) => {
                     }}
                     onKeyDown={e => {
                         if (e.key === 'Enter') {
-                            e.preventDefault();
-                            addItemToList();
-                            inputList.current = '';
+                            addList(e);
                         }
                     }}
-                    onBlur={e => {
-                        e.preventDefault();
-                        addItemToList();
-                        inputList.current = '';
-                    }}
+                    onBlur={addList}
                 />
             </div>
         </div>

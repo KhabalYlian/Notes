@@ -6,7 +6,9 @@ import {
     ModalRegistrationInfo
 } from '../components/index';
 
+
 export const Main = () => {
+
     return (
         <div className='app'>
             <AppHeader />

@@ -6,56 +6,59 @@ import { addNotesToDb } from '../../../slice/userSlice';
 import { EditNotice, CardNotes, Loading } from '../../index';
 import { LayoutGroup } from 'framer-motion';
 
+import { auth } from '../../../auth/firebase.config';
+import { checkAuth } from '../../../slice/userSlice';
+
 export const RenderNotes = () => {
     const dispatch = useDispatch();
+
     const loading = useSelector(state => state.users.loading);
     const notes = useSelector(state => state.notes.notes);
     const filteredNotes = useSelector(state => state.notes.filteredNotes);
     const checkVieEdit = useSelector(state => state.edit.checkVieEdit);
+    const isAuth = useSelector(state => state.users.isAuth);
 
     useEffect(() => {
-        if (
-            localStorage.getItem('notes') !== null &&
-            sessionStorage.length === 0
-        ) {
-            dispatch(notesSetNotes(JSON.parse(localStorage.getItem('notes'))));
-        }
+        const unsubsrube = auth.onAuthStateChanged(user => {
+			dispatch(checkAuth(user));
+			if (!user) {
+				dispatch(checkAuth(user));
+                if (localStorage.getItem('notes') !== null) {
+                    dispatch(
+                        notesSetNotes(JSON.parse(localStorage.getItem('notes')))
+                    );
+                }
+            } 
+        });
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        return unsubsrube;
     }, []);
 
     useEffect(() => {
-        if (sessionStorage.length === 0) {
-            if (notes.length > 0) {
-                localStorage.removeItem('notes');
-                localStorage.setItem('notes', JSON.stringify(notes));
-            } else {
-                localStorage.removeItem('notes');
-            }
-        } else {
+        if (isAuth && !loading) {
             dispatch(addNotesToDb(notes));
         }
-    }, [notes]);
 
-    //Рендерим елементи на сторінку
+		if (notes.length > 0 && !isAuth && !loading) {
+            localStorage.removeItem('notes');
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [notes, loading, isAuth]);
+
 
     const renderItems = useMemo(() => {
         return filteredNotes
             .filter(({ fixed }) => !fixed)
-            .map(({ id, color, text, title, list }) => {
+            .map((notes) => {
                 return (
-                    // <CSSTransition                    React Transition Group
-                    // 	key={item.id}
-                    // 	timeout={500}
-                    // 	classNames="render-notes">
-                    // 	<CardNotes objItem={item}/>
-                    // </CSSTransition>
                     <CardNotes
                         layout
-                        key={id}
+                        key={notes.id}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        notesInfo={{ id, color, text, title, list }}
+                        transition={{ duration: 0.3 }}
+                        notesInfo={notes}
                     />
                 );
             });
@@ -66,69 +69,48 @@ export const RenderNotes = () => {
     const renderFixedItems = useMemo(() => {
         return filteredNotes
             .filter(({ fixed }) => fixed)
-            .map(({ id, color, text, title, fixed, list }) => {
-
+            .map(notes => {
                 return (
-                    // <CSSTransition                            React Transition Group
-                    //     key={item.id}
-                    //     timeout={500}
-                    //     classNames="render-notes">
-                    //     <CardNotes objItem={item}/>
-                    // </CSSTransition>
-
                     <CardNotes
                         layout
-                        key={id}
+                        key={notes.id}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        notesInfo={{ id, color, text, title, list, fixed }}
+                        transition={{ duration: 0.3 }}
+                        notesInfo={notes}
                     />
                 );
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filteredNotes]);
 
+    function renderItem(cards) {
+        const renderFixed =
+            loading && !isAuth ? (
+                <Loading />
+            ) : (
+                <LayoutGroup>{cards}</LayoutGroup>
+            );
+
+        return renderFixed;
+    }
+
     return (
         <div className='render-notes'>
-            {/* <TransitionGroup className={"render-notes__inner"}>          React Transition Group
-			</TransitionGroup> */}
 
             {renderFixedItems.length !== 0 ? (
                 <h2 className='render-notes__title'>Закріплені нотатки:</h2>
             ) : null}
 
             <div className='render-notes__inner'>
-                {loading ? (
-                    <Loading />
-                ) : (
-                    <LayoutGroup>{renderFixedItems}</LayoutGroup>
-                )}
+                {renderItem(renderFixedItems)}
             </div>
 
             <h2 className='render-notes__title'>Всі нотатки:</h2>
 
-            {/* <TransitionGroup className="render-notes__inner">           React Transition Group
-            </TransitionGroup> */}
-            <div className='render-notes__inner'>
-                {loading ? (
-                    <Loading />
-                ) : (
-                    <LayoutGroup>{renderItems}</LayoutGroup>
-                )}
-            </div>
+            <div className='render-notes__inner'>{renderItem(renderItems)}</div>
 
             {checkVieEdit && <EditNotice />}
-
-            {/* <CSSTransition
-                in={checkVieEdit}
-				classNames='edit'
-                timeout={300}
-                mountOnEnter
-                unmountOnExit>
-
-            	<EditNotice/>
-
-            </CSSTransition> */}
         </div>
     );
 };

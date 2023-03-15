@@ -14,20 +14,26 @@ import { ReactComponent as PaletteIcon } from './icons/palette.svg';
 export const OptionBar = ({ id, setOpacity, children: ChooseColor }) => {
     const dispatch = useDispatch();
     const notes = useSelector(state => state.notes.notes);
+	const isAuth = useSelector(state => state.users.isAuth);
 
     const [activeColor, setActiveColor] = useState(false);
 
     const { setEditValue, onDeleteItem } = HelperFunctions();
 
+	function closeChooseColor(e) {
+		if (
+            !e.target.classList.contains('choose-color-notice__inner') &&
+            !e.target.classList.contains('option__choose-color')
+        ) {
+            setActiveColor(false);
+        }
+	}
+
     useEffect(() => {
-        document.body.addEventListener('click', e => {
-            if (
-                !e.target.classList.contains('choose-color-notice__inner') &&
-                !e.target.classList.contains('option__choose-color')
-            ) {
-                setActiveColor(false);
-            }
-        });
+        document.body.addEventListener('click', closeChooseColor);
+
+		return () =>
+            document.body.removeEventListener('click', closeChooseColor);
     }, []);
 
     useEffect(() => {
@@ -38,7 +44,7 @@ export const OptionBar = ({ id, setOpacity, children: ChooseColor }) => {
         <div className='option'>
             <Button
                 className='option__btn option__remove'
-                onClick={() => dispatch(notesSetNotes(onDeleteItem(id, notes)))}
+                onClick={() => dispatch(notesSetNotes(onDeleteItem(id, notes, isAuth)))}
             >
                 <DeleteIcon />
             </Button>

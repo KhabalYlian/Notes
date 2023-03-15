@@ -19,9 +19,8 @@ import { db, auth } from '../auth/firebase.config';
 const initialState = {
     user: {},
     registrationInfo: {},
-    isRegistration: false,
     isAuth: false,
-    loading: false,
+    loading: true,
     checkRedirect: false,
     errorMessage: ''
 };
@@ -68,7 +67,6 @@ export const userLogin = createAsyncThunk(
 export const userLogout = createAsyncThunk('users/logout', async () => {
     try {
         await signOut(auth);
-        document.location.reload();
     } catch (error) {}
 });
 
@@ -109,14 +107,14 @@ export const userRegistration = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk(
     'users/checkAuth',
-    async (user, { dispatch }) => {
-        const docRef = doc(db, 'users', user.uid);
-        const docData = await getDoc(docRef);
-        const data = docData.data();
+    async (user, { dispatch}) => {
+		const docRef = doc(db, 'users', user.uid);
+		const docData = await getDoc(docRef);
+		const data = docData.data();
 
-        dispatch(notesSetNotes(data.notes));
+		dispatch(notesSetNotes(data.notes));
 
-        return data;
+		return data;
     }
 );
 
@@ -133,10 +131,10 @@ const users = createSlice({
         },
         usersChangeRedirect: (state, action) => {
             state.checkRedirect = action.payload;
-        }, 
-		usersErrorMessage: (state, action) => {
-			state.errorMessage = action.payload;
-		}
+        },
+        usersErrorMessage: (state, action) => {
+            state.errorMessage = action.payload;
+        },
     },
     extraReducers: {
         [userLogin.pending]: state => {
@@ -186,13 +184,13 @@ const users = createSlice({
             state.loading = true;
         },
         [checkAuth.fulfilled]: (state, action) => {
+            state.user = action.payload;
             state.loading = false;
             state.isAuth = true;
-            state.user = action.payload;
         },
         [checkAuth.rejected]: (state, action) => {
             state.loading = false;
-            state.isRegistration = true;
+            state.isAuth = false;
         }
     }
 });
@@ -205,5 +203,5 @@ export const {
     usersRegistrationInfo,
     usersSetInfo,
     usersChangeRedirect,
-    usersErrorMessage
+    usersErrorMessage,
 } = actions;

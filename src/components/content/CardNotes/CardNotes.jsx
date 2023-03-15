@@ -23,7 +23,7 @@ export const CardNotes = memo(
             const { setFixed } = HelperFunctions();
 
             return (
-                <div
+                <motion.div
                     style={{ backgroundColor: color }}
                     ref={ref}
                     className='card-notes__items'
@@ -36,23 +36,12 @@ export const CardNotes = memo(
                     >
                         <FixedIcon />
                     </div>
-                    {!list ? (
-                        <>
-                            <div className='card-notes__title'>{title}</div>
-                            <div className='card-notes__paragraph'>{text}</div>
-                            <div
-                                className='card-notes__option'
-                                style={{ opacity: opacity ? 1 : 0 }}
-                            >
-                                <OptionBar id={id} setOpacity={setOpacity}>
-                                    <ChooseColors id={id} color={color} />
-                                </OptionBar>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div className='card-notes__title'>{title}</div>
-                            <div className='card-notes__paragraph'>
+                    <>
+                        <div className='card-notes__title'>{title}</div>
+                        <div className='card-notes__paragraph'>
+                            {!list ? (
+                                text
+                            ) : (
                                 <CardList
                                     notesList={{
                                         id,
@@ -63,18 +52,18 @@ export const CardNotes = memo(
                                     }}
                                     editeble={true}
                                 />
-                            </div>
-                            <div
-                                className='card-notes__option'
-                                style={{ opacity: opacity ? 1 : 0 }}
-                            >
-                                <OptionBar id={id} setOpacity={setOpacity}>
-                                    <ChooseColors id={id} color={color} />
-                                </OptionBar>
-                            </div>
-                        </>
-                    )}
-                </div>
+                            )}
+                        </div>
+                        <div
+                            className='card-notes__option'
+                            style={{ opacity: opacity ? 1 : 0 }}
+                        >
+                            <OptionBar id={id} setOpacity={setOpacity}>
+                                <ChooseColors id={id} color={color} />
+                            </OptionBar>
+                        </div>
+                    </>
+                </motion.div>
             );
         })
     )

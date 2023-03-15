@@ -47,7 +47,14 @@ export const AddSingleNotes = memo(
                     onKeyDown={ e => {
                         if (e.key === 'Enter') {
                             focusNextInput.current.blur();
-                            addNotes(notesValue);
+                            addNotes(
+                                notesValue,
+                                setNotesValue.bind(this, {
+                                    ...notesValue,
+                                    title: '',
+                                    text: ''
+                                })
+                            );
                         }
                     }}
                     onChange={e => {

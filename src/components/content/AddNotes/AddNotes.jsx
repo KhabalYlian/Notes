@@ -8,6 +8,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import { v4 } from 'uuid';
 
+
 import { ReactComponent as PlusIcon } from './plus.svg';
 import { ReactComponent as List } from './list.svg';
 import { ReactComponent as Single } from './single.svg';
@@ -18,7 +19,7 @@ export const AddNotes = memo(() => {
 
     const [showError, setShowError] = useState(false);
     const [toggleAddNotes, setToggleAddNotes] = useState(0);
-    const [notesValue, setNotesValue] = useState({
+    let [notesValue, setNotesValue] = useState({
         title: '',
         text: '',
         color: '#e3e3e3'
@@ -28,19 +29,15 @@ export const AddNotes = memo(() => {
     const title = useRef('');
     const text = useRef('');
 
-    function addNotes(newNotes) {
-        const id = v4();
-        if (checkOnValue(newNotes) === false) return false;
-        dispatch(notesSetNotes([{ id: id, ...newNotes }, ...notes]));
-        setNotesValue({ ...newNotes, title: '', text: '' });
-        title.current = '';
-        text.current = '';
-    }
 
-    function addListNotes(newNotes) {
+    function addNotes(newNotes, resetForm) {
         const id = v4();
-        dispatch(notesSetNotes([{ id: id, ...newNotes }, ...notes]));
-        setList({ title: '', list: [] });
+		const newItem = { id: id, ...newNotes }
+        if (!checkOnValue(newNotes)) return false;
+
+        dispatch(notesSetNotes([newItem, ...notes]));
+
+        resetForm();
         title.current = '';
         text.current = '';
     }
@@ -59,6 +56,7 @@ export const AddNotes = memo(() => {
 
             return false;
         }
+        return true;
     }
 
     function resetFormNotes(e) {
@@ -90,9 +88,19 @@ export const AddNotes = memo(() => {
                     className='add-notes__btn'
                     onClick={() => {
                         if (toggleAddNotes) {
-                            addListNotes(list);
+                            addNotes(
+                                list,
+                                setList.bind(this, { title: '', list: [] })
+                            );
                         } else {
-                            addNotes(notesValue);
+                            addNotes(
+                                notesValue,
+                                setNotesValue.bind(this, {
+                                    ...notesValue,
+                                    title: '',
+                                    text: ''
+                                })
+                            );
                         }
                         addAnimation();
                     }}

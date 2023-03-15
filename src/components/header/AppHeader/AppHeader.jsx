@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkAuth, addNotesToDb } from '../../../slice/userSlice';
 import cn from 'classnames';
-import { auth } from '../../../auth/firebase.config';
 
-import { onIdTokenChanged } from 'firebase/auth';
+import { addNotesToDb } from '../../../slice/userSlice';
+
 import { Profile, Loading } from '../../index';
 
 export const AppHeader = () => {
@@ -12,21 +11,15 @@ export const AppHeader = () => {
 
     const loading = useSelector(state => state.users.loading);
     const isAuth = useSelector(state => state.users.isAuth);
-    const isRegistration = useSelector(state => state.users.isRegistration);
 
     const [active, setActrive] = useState(false);
 
-    useEffect(() => {
-        onIdTokenChanged(auth, userCredential => {
-            dispatch(checkAuth(userCredential));
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const spinner = loading ? <Loading /> : null;
-    const profile = isAuth && !loading ? <Profile /> : null;
-    const registration =
-        isRegistration && !isAuth && !loading ? <Registration /> : null;
+    const spinner = useMemo(
+        () => (loading ? <Loading /> : null),
+        [isAuth, loading]
+    );
+    const profile = useMemo(() => isAuth && !loading ? <Profile /> : null, [isAuth, loading]);
+    const registration = useMemo(() => !isAuth && !loading  ? <Registration /> : null ,[loading, isAuth])
 
     return (
         <header className='app-header'>
